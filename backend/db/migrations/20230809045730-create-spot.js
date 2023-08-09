@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "production") {
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Users",
+      "Spots",
       {
         id: {
           allowNull: false,
@@ -17,26 +17,48 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        firstName: {
-          type: Sequelize.STRING(50),
+        ownerId: {
+          type: Sequelize.INTEGER,
           allowNull: false,
+          references: {
+            model: "Users",
+          },
+          onDelete: "CASCADE",
         },
-        lastName: {
-          type: Sequelize.STRING(50),
-          allowNull: false,
-        },
-        username: {
-          type: Sequelize.STRING(30),
-          allowNull: false,
-          unique: true,
-        },
-        email: {
-          type: Sequelize.STRING(30),
-          allowNull: false,
-          unique: true,
-        },
-        hashedPassword: {
+        address: {
           type: Sequelize.STRING,
+          allowNull: false,
+          unique: true,
+        },
+        city: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        state: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        country: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        lat: {
+          type: Sequelize.DECIMAL,
+        },
+        lng: {
+          type: Sequelize.DECIMAL,
+          allowNull: false,
+        },
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        description: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        price: {
+          type: Sequelize.DECIMAL,
           allowNull: false,
         },
         createdAt: {
@@ -54,7 +76,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Users";
+    options.tableName = "Spots";
     return queryInterface.dropTable(options);
   },
 };
