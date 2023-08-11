@@ -20,23 +20,23 @@ module.exports = {
      * }], {});
      */
 
-    await SpotImage.bulkCreate(
+    await SpotImage.bulkCreate([
       {
         spotId: 1,
-        url: "test1",
+        url: "url1",
         preview: true,
       },
       {
         spotId: 2,
-        url: "test2",
-        preview: false,
+        url: "url2",
+        preview: true,
       },
       {
         spotId: 3,
-        url: "test3",
+        url: "url3",
         preview: true,
       }
-    );
+    ]);
   },
 
   async down(queryInterface, Sequelize) {
@@ -47,14 +47,15 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
-    options.tableName = "SpotsImages";
+    options.tableName = "SpotImages";
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(
       options,
       {
-        spotId: { [Op.in]: [1, 2, 3] },
-      },
-      {}
+        spotId: {
+          [Op.in]: [1, 2, 3]
+        },
+      }, {}
     );
   },
 };
