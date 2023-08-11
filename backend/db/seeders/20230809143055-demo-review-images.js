@@ -20,20 +20,20 @@ module.exports = {
      * }], {});
      */
 
-    await ReviewImage.bulkCreate(
+    await ReviewImage.bulkCreate([
       {
         reviewId: 1,
-        url: "url1",
+        url: "testurl4",
       },
       {
         reviewId: 2,
-        url: "url2",
+        url: "testurl5",
       },
       {
         reviewId: 3,
-        url: "url3",
-      }
-    );
+        url: "testurl6",
+      },
+    ]);
   },
 
   async down(queryInterface, Sequelize) {

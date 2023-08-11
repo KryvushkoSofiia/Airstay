@@ -20,26 +20,26 @@ module.exports = {
      * }], {});
      */
 
-    await Review.bulkCreate(
+    await Review.bulkCreate([
       {
         spotId: 1,
-        userId: 2,
-        review: "good",
+        userId: 1,
+        review: "Cool place",
         stars: 5,
       },
       {
         spotId: 2,
-        userId: 3,
-        review: "normal",
-        stars: 3,
+        userId: 2,
+        review: "Do not even try",
+        stars: 1,
       },
       {
         spotId: 3,
-        userId: 1,
-        review: "bad",
-        stars: 1,
-      }
-    );
+        userId: 3,
+        review: "Normal for 1 night",
+        stars: 3,
+      },
+    ]);
   },
 
   async down(queryInterface, Sequelize) {
@@ -58,7 +58,8 @@ module.exports = {
         spotId: {
           [Op.in]: [1, 2, 3],
         },
-      },{}
+      },
+      {}
     );
   },
 };
