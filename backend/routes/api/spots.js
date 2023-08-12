@@ -290,53 +290,47 @@ router.post(
 router.get("/:spotId/reviews", async (req, res) => {
   const spotId = req.params.spotId;
 
-  try {
-    const spot = await Spot.findByPk(spotId, {
-      include: [
-        {
-          model: Review,
-          include: [
-            {
-              model: User,
-              attributes: ["id", "firstName", "lastName"],
-            },
-            ReviewImage, // Automatically includes all attributes
-          ],
-        },
-      ],
-    });
-
-    if (!spot) {
-      res.status(404);
-      return res.json({
-        message: "Spot couldn't be found",
-      });
-    }
-
-    const reviews = spot.Reviews.map((review) => ({
-      id: review.id,
-      userId: review.userId,
-      spotId: review.spotId,
-      review: review.review,
-      stars: review.stars,
-      createdAt: review.createdAt,
-      updatedAt: review.updatedAt,
-      User: {
-        id: review.User.id,
-        firstName: review.User.firstName,
-        lastName: review.User.lastName,
+  const spot = await Spot.findByPk(spotId, {
+    include: [
+      {
+        model: Review,
+        include: [
+          {
+            model: User,
+            attributes: ["id", "firstName", "lastName"],
+          },
+          ReviewImage, // Automatically includes all attributes
+        ],
       },
-      ReviewImages: review.ReviewImages,
-    }));
+    ],
+  });
 
-    res.status(200).json({ Reviews: reviews });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: "An error occurred while fetching reviews",
+  if (!spot) {
+    res.status(404);
+    return res.json({
+      message: "Spot couldn't be found",
     });
   }
+
+  const reviews = spot.Reviews.map((review) => ({
+    id: review.id,
+    userId: review.userId,
+    spotId: review.spotId,
+    review: review.review,
+    stars: review.stars,
+    createdAt: review.createdAt,
+    updatedAt: review.updatedAt,
+    User: {
+      id: review.User.id,
+      firstName: review.User.firstName,
+      lastName: review.User.lastName,
+    },
+    ReviewImages: review.ReviewImages,
+  }));
+
+  res.status(200).json({ Reviews: reviews });
 });
+
 
 
 
