@@ -1,4 +1,3 @@
-
 "use strict";
 
 const { Booking } = require("../models");
@@ -13,7 +12,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
 
 
-    await Booking.bulkCreate(
+    await Booking.bulkCreate([
       {
         spotId: 1,
         userId: 2,
@@ -32,7 +31,7 @@ module.exports = {
         startDate: "2000-02-03",
         endDate: "2016-10-11",
       }
-    );
+    ]);
   },
 
   async down(queryInterface, Sequelize) {
