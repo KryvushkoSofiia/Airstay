@@ -2,6 +2,10 @@
 const express = require("express");
 const router = express.Router();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> caa6057 (frontend setup completed)
 // Add a XSRF-TOKEN cookie in development
 if (process.env.NODE_ENV !== 'production') {
   router.get('/api/csrf/restore', (req, res) => {
