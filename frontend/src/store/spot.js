@@ -102,6 +102,7 @@ export const createSpot = (spotData) => async (dispatch) => {
 
 export const uploadImage = (imageData, spotId) => async (dispatch) => {
   try {
+    await restoreCSRF();
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
       method: 'POST',
       headers: {
@@ -161,6 +162,7 @@ export const updateSpot = (spotData) => async (dispatch) => {
 // Thunk Action to delete a spot by spotId
 export const deleteSpot = (spotId) => async (dispatch) => {
   try {
+    await restoreCSRF();
     const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: 'DELETE',
     });
