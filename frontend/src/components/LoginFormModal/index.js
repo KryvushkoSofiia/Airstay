@@ -1,8 +1,9 @@
+// LoginFormModal.js
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import "./LoginForm.css";
+import "./LoginForm.css"; // Import the CSS file
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -25,21 +26,23 @@ function LoginFormModal() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <div className="login-form-container">
+      <h1 className="login-form-title">Log In</h1>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <label className="login-form-label">
           Username or Email
           <input
+            className="login-form-input"
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
             required
           />
         </label>
-        <label>
+        <label className="login-form-label">
           Password
           <input
+            className="login-form-input"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -47,11 +50,11 @@ function LoginFormModal() {
           />
         </label>
         {errors.credential && (
-          <p>{errors.credential}</p>
+          <p className="login-form-error">{errors.credential}</p>
         )}
-        <button type="submit">Log In</button>
+        <button className="login-form-button" type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 }
 
