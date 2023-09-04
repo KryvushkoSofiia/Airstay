@@ -12,8 +12,8 @@ const validateSpot = [
   check("city").notEmpty().withMessage("City is required"),
   check("country").notEmpty().withMessage("Country is required"),
   check("state").notEmpty().withMessage("State is required"),
-  check("lat").notEmpty().withMessage("Latitude is not valid"),
-  check("lng").notEmpty().withMessage("Longitude is not valid"),
+  //check("lat").notEmpty().withMessage("Latitude is not valid"),
+  //check("lng").notEmpty().withMessage("Longitude is not valid"),
   check("name")
     .notEmpty().withMessage("Name must not be empty")
     .isLength({ max: 50 }).withMessage("Name must be less than 50 characters"),
@@ -69,7 +69,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", requireAuth, validateSpot, async (req, res) => {
-  const { address, city, state, country, lat, lng, name, description, price } =
+  const { address, city, state, country, name, description, price } =
     req.body;
 
   const spot = await Spot.create({
@@ -78,8 +78,6 @@ router.post("/", requireAuth, validateSpot, async (req, res) => {
     city,
     state,
     country,
-    lat,
-    lng,
     name,
     description,
     price,
@@ -90,40 +88,58 @@ router.post("/", requireAuth, validateSpot, async (req, res) => {
 });
 
 
-
+//changed
 router.post("/:spotId/images", requireAuth, async (req, res) => {
-  const spot = await Spot.findByPk(req.params.spotId);
-  const user = await User.findByPk(req.user.id);
+  try {
+    const { url, preview } = req.body;
+    const id = parseInt(req.user.id);
+    const spotId = parseInt(req.params.spotId);
 
-  if (!spot) {
-    res.status(404);
-    return res.json({
-      message: "Spot couldn't be found",
+    const addToSpot = await Spot.findByPk(spotId, {
+      include: {
+        model: SpotImage,
+      },
+    });
+
+    if (!addToSpot) {
+      res.status(404);
+      return res.json({
+        message: "Spot couldn't be found",
+      });
+    }
+
+    if (id !== addToSpot.ownerId) {
+      res.status(403);
+      return res.json({
+        message: "Spot must belong to the current user",
+      });
+    }
+
+    const jsonSpot = addToSpot.toJSON();
+    const newImage = await SpotImage.create({
+      spotId,
+      url,
+      preview,
+    });
+
+    jsonSpot.SpotImages.push(newImage);
+
+    let toSend = jsonSpot.SpotImages;
+    let lastAdded = await toSend[toSend.length - 1];
+    const finalJSON = lastAdded.toJSON();
+
+    res.json({
+      id: finalJSON.id,
+      url: finalJSON.url,
+      preview: finalJSON.preview,
+    });
+  } catch (error) {
+    console.error("Error adding spot image:", error);
+    res.status(500).json({
+      message: "Server Error",
     });
   }
-
-  if (spot.ownerId !== user.id) {
-    res.status(403);
-    return res.json({
-      message: "Spot must belong to the current user",
-    });
-  }
-
-  const { url, preview } = req.body;
-
-  const spotImage = await SpotImage.create({
-    spotId: req.params.spotId,
-    url,
-    preview,
-  });
-
-  res.json({
-    id: spotImage.id,
-    url: spotImage.url,
-    preview: spotImage.preview,
-  });
 });
-
 
 
 router.get("/current", requireAuth, async (req, res) => {
@@ -227,8 +243,8 @@ router.put("/:spotId", requireAuth, validateSpot, async (req, res) => {
     city,
     state,
     country,
-    lat,
-    lng,
+    //lat,
+    //lng,
     name,
     description,
     price,
@@ -239,8 +255,8 @@ router.put("/:spotId", requireAuth, validateSpot, async (req, res) => {
     city,
     state,
     country,
-    lat,
-    lng,
+    //lat,
+    //lng,
     name,
     description,
     price,

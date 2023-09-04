@@ -16,14 +16,17 @@ module.exports = (sequelize, DataTypes) => {
       Spot.hasMany(models.SpotImage, {
         foreignKey: "spotId",
         onDelete: "CASCADE",
+        hooks: true,
       });
       Spot.hasMany(models.Booking, {
         foreignKey: "spotId",
         onDelete: "CASCADE",
+        hooks: true,
       });
       Spot.hasMany(models.Review, {
         foreignKey: "spotId",
         onDelete: "CASCADE",
+        hooks: true,
       });
     }
   }
@@ -52,11 +55,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       lat: {
         type: DataTypes.DECIMAL,
-        allowNull: false,
+   
       },
       lng: {
         type: DataTypes.DECIMAL,
-        allowNull: false,
       },
       name: {
         type: DataTypes.STRING,
