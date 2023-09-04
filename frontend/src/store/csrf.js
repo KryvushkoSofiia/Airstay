@@ -1,31 +1,45 @@
 import Cookies from 'js-cookie';
 
+/**
+ * Perform an HTTP request with optional CSRF token inclusion.
+ *
+ * @param {string} url - The URL to make the request to.
+ * @param {Object} options - The request options (e.g., method, headers, body).
+ * @returns {Promise<Response>} - A promise that resolves with the response.
+ */
 export async function csrfFetch(url, options = {}) {
-  // set options.method to 'GET' if there is no method
+  // Set options.method to 'GET' if not provided
   options.method = options.method || 'GET';
-  // set options.headers to an empty object if there is no headers
+
+  // Set options.headers to an empty object if not provided
   options.headers = options.headers || {};
 
-  // if the options.method is not 'GET', then set the "Content-Type" header to
-    // "application/json", and set the "XSRF-TOKEN" header to the value of the 
-    // "XSRF-TOKEN" cookie
+  // Include CSRF token in headers for non-GET requests
   if (options.method.toUpperCase() !== 'GET') {
-    options.headers['Content-Type'] =
-      options.headers['Content-Type'] || 'application/json';
-    options.headers['XSRF-Token'] = Cookies.get('XSRF-TOKEN');
+    options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json';
+    options.headers['X-XSRF-Token'] = Cookies.get('XSRF-TOKEN');
   }
-  // call the default window's fetch with the url and the options passed in
-  const res = await window.fetch(url, options);
 
-  // if the response status code is 400 or above, then throw an error with the
-    // error being the response
-  if (res.status >= 400) throw res;
+  try {
+    const response = await fetch(url, options);
 
-  // if the response status code is under 400, then return the response to the
-    // next promise chain
-  return res;
+    if (response.status >= 400) {
+      // Handle error responses here, e.g., throw a custom error
+      throw new Error('Request failed with status ' + response.status);
+    }
+
+    return response;
+  } catch (error) {
+    // Handle network errors or other exceptions
+    throw new Error('Network error: ' + error.message);
+  }
 }
 
+/**
+ * Retrieve the CSRF token from the server.
+ *
+ * @returns {Promise<Response>} - A promise that resolves with the response.
+ */
 export function restoreCSRF() {
-    return csrfFetch('/api/csrf/restore');
-  }
+  return csrfFetch('/api/csrf/restore');
+}
