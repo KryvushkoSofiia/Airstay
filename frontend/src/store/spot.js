@@ -39,8 +39,8 @@ const deleteSpotAction = (spotId) => ({
 
 // Thunk Action to fetch all spots
 export const getSpot = () => async (dispatch) => {
-  try {
-    await restoreCSRF();
+  // try {
+    //await restoreCSRF();
     const response = await csrfFetch(`/api/spots`);
 
     if (response.ok) {
@@ -49,15 +49,15 @@ export const getSpot = () => async (dispatch) => {
     } else {
       throw new Error('Failed to fetch spot');
     }
-  } catch (error) {
-    console.error('Error fetching spot:', error);
-  }
+  // } catch (error) {
+  //   console.error('Error fetching spot:', error);
+  // }
 };
 
 // Thunk Action to fetch a single spot by spotId
 export const getSingleSpot = (spotId) => async (dispatch) => {
-  try {
-    await restoreCSRF();
+  //try {
+   // await restoreCSRF();
     const response = await csrfFetch(`/api/spots/${spotId}`);
 
     if (response.ok) {
@@ -66,16 +66,16 @@ export const getSingleSpot = (spotId) => async (dispatch) => {
     } else {
       throw new Error('Failed to fetch spot');
     }
-  } catch (error) {
-    console.error('Error fetching spot:', error);
-  }
+  // } catch (error) {
+  //   console.error('Error fetching spot:', error);
+  // }
 };
 
 
 export const createSpot = (spotData) => async (dispatch) => {
-  try {
+  // try {
 
-    await restoreCSRF();
+  //  await restoreCSRF();
 
 
     const response = await csrfFetch(`/api/spots`, {
@@ -94,15 +94,15 @@ export const createSpot = (spotData) => async (dispatch) => {
     } else {
       throw new Error('Failed to create spot');
     }
-  } catch (error) {
-    console.error('Error creating spot:', error);
-    throw error;
-  }
+  // } catch (error) {
+  //   console.error('Error creating spot:', error);
+  //   throw error;
+  // }
 };
 
 export const uploadImage = (imageData, spotId) => async (dispatch) => {
-  try {
-    await restoreCSRF();
+  // try {
+   // await restoreCSRF();
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
       method: 'POST',
       headers: {
@@ -118,15 +118,15 @@ export const uploadImage = (imageData, spotId) => async (dispatch) => {
     } else {
       throw new Error('Failed to upload image');
     }
-  } catch (error) {
-    console.error('Error uploading image:', error);
-    throw error;
-  }
+  // } catch (error) {
+  //   console.error('Error uploading image:', error);
+  //   throw error;
+  // }
 };
 
 export const updateSpot = (spotData) => async (dispatch) => {
-  try {
-    await restoreCSRF();
+  // try {
+   // await restoreCSRF();
 
     const { address, city, state, country, name, description, price, id } = spotData;
 
@@ -153,16 +153,16 @@ export const updateSpot = (spotData) => async (dispatch) => {
     } else {
       throw new Error('Failed to update spot');
     }
-  } catch (error) {
-    console.error('Error updating spot:', error);
-    throw error;
-  }
+  // } catch (error) {
+  //   console.error('Error updating spot:', error);
+  //   throw error;
+  // }
 };
 
 // Thunk Action to delete a spot by spotId
 export const deleteSpot = (spotId) => async (dispatch) => {
-  try {
-    await restoreCSRF();
+  // try {
+    //await restoreCSRF();
     const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: 'DELETE',
     });
@@ -173,10 +173,10 @@ export const deleteSpot = (spotId) => async (dispatch) => {
       const errorData = await response.json();
       throw new Error(`Failed to delete spot: ${errorData.message}`);
     }
-  } catch (error) {
-    console.error('Error deleting spot:', error);
-    throw error;
-  }
+  // } catch (error) {
+  //   console.error('Error deleting spot:', error);
+  //   throw error;
+  // }
 };
 
 // Reducer
