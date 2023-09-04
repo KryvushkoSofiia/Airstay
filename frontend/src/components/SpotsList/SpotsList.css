@@ -1,0 +1,36 @@
+.spots-main {
+    margin: 20px auto;
+    max-width: 1024px;
+
+}
+
+.spot-container>* {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.spot-details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+}
+
+.spots-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+
+.thumbnail {
+    width: 250px;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+
+}
