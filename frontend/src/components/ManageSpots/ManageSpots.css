@@ -1,0 +1,128 @@
+.all-manage-spots {
+    margin: 0 auto;
+    max-width: 1350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.manage-spots-container {
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.manage-spots-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.manage-create-spot-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    max-width: 20%;
+    margin-bottom: 20px;
+}
+
+.manage-create-spot-button:hover {
+    background-color: #0056b3;
+}
+
+.manage-spot-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.manage-spot-card {
+    background-color: #fff;
+    min-width: 200px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    flex-basis: calc(25% - 20px);
+    position: relative;
+    transition: transform 0.2s ease-in-out;
+}
+
+.manage-spot-card:hover {
+    transform: translateY(-5px);
+}
+
+.manage-spot-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.manage-spot-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.manage-spot-details {
+    padding: 20px;
+}
+
+.manage-spot-location {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.manage-spot-rating {
+    font-size: 14px;
+    color: #888;
+}
+
+.manage-spot-price {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0 20px 20px;
+}
+
+.manage-spot-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 20px;
+}
+
+.manage-update-link {
+    text-decoration: none;
+}
+
+.manage-update-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.manage-update-button:hover {
+    background-color: #218838;
+}
+
+.manage-delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.manage-delete-button:hover {
+    background-color: #c82333;
+}
