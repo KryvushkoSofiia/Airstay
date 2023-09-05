@@ -1,4 +1,3 @@
-// ProfileButton.js
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
@@ -21,12 +20,12 @@ function ProfileButton({ user }) {
 
   useEffect(() => {
     if (showMenu) {
-      document.addEventListener('click', closeMenu);
+      document.addEventListener('click', handleDocumentClick);
     } else {
-      document.removeEventListener('click', closeMenu);
+      document.removeEventListener('click', handleDocumentClick);
     }
 
-    return () => document.removeEventListener('click', closeMenu);
+    return () => document.removeEventListener('click', handleDocumentClick);
   }, [showMenu]);
 
   const toggleMenu = () => {
@@ -34,6 +33,15 @@ function ProfileButton({ user }) {
       openMenu();
     } else {
       closeMenu();
+    }
+  };
+
+  const handleDocumentClick = (e) => {
+    if (ulRef.current && !ulRef.current.contains(e.target)) {
+
+      if (e.target.className !== 'profile-dropdown-item username') {
+        closeMenu();
+      }
     }
   };
 
@@ -45,7 +53,6 @@ function ProfileButton({ user }) {
   const ulClassName = `profile-dropdown ${showMenu || initialHover ? 'active' : ''}`;
 
   useEffect(() => {
-    // Initialize the dropdown as open when the component mounts
     setShowMenu(true);
   }, []);
 
@@ -57,11 +64,15 @@ function ProfileButton({ user }) {
       <div className={ulClassName} ref={ulRef}>
         {showMenu && (
           <ul className="profile-dropdown-list">
-            <li className="profile-dropdown-item">{user.username}</li>
-            <li className="profile-dropdown-item">{user.firstName} {user.lastName}</li>
-            <li className="profile-dropdown-item">{user.email}</li>
-            <li className="profile-dropdown-item">
-            <NavLink to={`/user-spots/${user.id}`}>
+            <li className="profile-dropdown-item username">Hello, {user.username}</li>
+            <li className="profile-dropdown-item" onClick={(e) => e.stopPropagation()}>
+              {user.firstName} {user.lastName}
+            </li>
+            <li className="profile-dropdown-item" onClick={(e) => e.stopPropagation()}>
+              {user.email}
+            </li>
+            <li className="profile-dropdown-item" onClick={(e) => e.stopPropagation()}>
+              <NavLink to={`/user-spots/${user.id}`}>
                 Manage spots
               </NavLink>
             </li>

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { deleteSpot } from "../../../store/spot";
 import { useHistory } from "react-router-dom";
+import "./DeleteModal.css";
 
 function DeleteModal({ spotId, ownerId, onDeleteSpot }) {
   const dispatch = useDispatch();
@@ -12,8 +13,8 @@ function DeleteModal({ spotId, ownerId, onDeleteSpot }) {
   const clickedYes = async () => {
     await dispatch(deleteSpot(spotId));
     closeModal();
-    onDeleteSpot(spotId); // Call the onDeleteSpot callback
-    history.push(`/user-spots/${ownerId}`); // Replace with the desired URL
+    onDeleteSpot(spotId);
+    history.push(`/user-spots/${ownerId}`);
   };
 
   const clickedNo = () => {
@@ -21,14 +22,20 @@ function DeleteModal({ spotId, ownerId, onDeleteSpot }) {
   };
 
   return (
-    <>
-      <h2>Confirm Delete</h2>
-      <h5>Are you sure you want to remove this spot from the listings?</h5>
-      <div>
-        <button onClick={clickedYes}>Yes (Delete Spot)</button>
-        <button onClick={clickedNo}>No (Keep Spot)</button>
+    <div className="delete-modal-container">
+      <h2 className="delete-modal-title">Confirm Delete</h2>
+      <h5 className="delete-modal-message">
+        Are you sure you want to remove this spot from the listings?
+      </h5>
+      <div className="button-container">
+        <button className="delete-button" onClick={clickedYes}>
+          Yes (Delete Spot)
+        </button>
+        <button className="cancel-button" onClick={clickedNo}>
+          No (Keep Spot)
+        </button>
       </div>
-    </>
+    </div>
   );
 }
 

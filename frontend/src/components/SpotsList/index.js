@@ -23,7 +23,7 @@ const SpotsList = () => {
                     <div key={spot.id} className="spot-container">
                         <NavLink to={`/spots/${spot.id}`} className="spot-tile">
                             <div className="thumbnail" style={{ backgroundImage: `url(${spot.previewImage})` }}>
-                                {/* <span className="tooltip">{spot.name}</span> */}
+                                <span className="tooltip">{spot.name}</span>
                             </div>
                             <div className="spot-details">
                             <div>

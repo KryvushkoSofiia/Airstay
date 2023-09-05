@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSingleSpot } from '../../store/spot';
-import ReviewsList from '../ReviewsList';
 import './SpotDetails.css';
 
 const SpotDetails = () => {
@@ -33,52 +32,64 @@ const SpotDetails = () => {
         return <div>Data not found</div>;
     }
 
-    const numReviews = singleSpot.numReviews >= 0 ? singleSpot.numReviews : "New"; // Check for greater than or equal to 0
+    const numReviews = singleSpot.numReviews >= 0 ? singleSpot.numReviews : "New";
 
     return (
-        <div className="spot-details-container">
-            <div>
-                <h1>{singleSpot.name}</h1>
-                <p>Location: {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
-            </div>
 
-            <div className="images">
-                {singleSpot.SpotImages.length > 0 && (
-                    <div className='images-wrapper'>
-                        <div>
-                            <img src={singleSpot.SpotImages[0].url} alt="Large Image" className="large-image" />
-                        </div>
-                        <div className='small-img-wrapper'>
-                            <div className="small-image-row">
-                                {singleSpot.SpotImages.slice(1, 3).map((image, index) => (
-                                    <img key={index} src={image.url} alt={`Image ${index + 1}`} className="small-image" />
-                                ))}
-                            </div>
-                            <div className="small-image-row">
-                                {singleSpot.SpotImages.slice(3).map((image, index) => (
-                                    <img key={index} src={image.url} alt={`Image ${index + 1}`} className="small-image" />
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            <div>
-                <p>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName}</p>
-                <p>{singleSpot.description}</p>
-            </div>
-
-            <div className="callout-box">
-                <div className='callout-box__info'>
-                    <p>{singleSpot.price}$ night</p>
-                    <div className="star-rating">★ {singleSpot.avgRating > 0 ? singleSpot.avgRating.toFixed(1) : 'New'}</div>
-                    <div>
-                        {numReviews !== 0 && <p>Reviews: {numReviews}</p>}</div>
+        <div className='spot-details_wrapper'>
+            <div className="spot-details-container">
+                <div>
+                    <h1>{singleSpot.name}</h1>
+                    <p>Location: {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</p>
                 </div>
-                <button className="reserve-btn" onClick={reserveSpot}>Reserve</button>
-            </div>
 
+                <div className="images">
+                    {singleSpot.SpotImages.length > 0 && (
+                        <div className='images-wrapper'>
+                            <div>
+                                <img src={singleSpot.SpotImages[0].url} alt="Large Image" className="large-image" />
+                            </div>
+                            <div className='small-img-wrapper'>
+                                <div className="small-image-row">
+                                    {singleSpot.SpotImages.slice(1, 3).map((image, index) => (
+                                        <img key={index} src={image.url} alt={`Image ${index + 1}`} className="small-image" />
+                                    ))}
+                                </div>
+                                <div className="small-image-row">
+                                    {singleSpot.SpotImages.slice(3).map((image, index) => (
+                                        <img key={index} src={image.url} alt={`Image ${index + 1}`} className="small-image" />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className='details-wrapper'>
+                    <p>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName}</p>
+                    <p className='description'>{singleSpot.description}</p>
+                </div>
+
+                <div className="callout-box">
+                    <div className='callout-box__info'>
+                        <p>{singleSpot.price}$ night</p>
+                        <div className="star-rating">★ {singleSpot.avgRating > 0 ? singleSpot.avgRating.toFixed(1) : 'New'}</div>
+                        {numReviews !== 0 && (
+                            <div className="dot">•</div>
+                        )}
+                        {numReviews !== 0 && <p>Reviews: {numReviews}</p>}
+                    </div>
+                    <button className="reserve-btn" onClick={reserveSpot}>Reserve</button>
+                </div>
+            </div>
+            <div className='rating-reviews__block'>
+                <div className="star-rating">★ {singleSpot.avgRating > 0 ? singleSpot.avgRating.toFixed(1) : 'New'}</div>
+                {numReviews !== 0 && (
+                    <div className="dot">•</div>
+                )}
+                <div>{numReviews !== 0 && <p>Reviews: {numReviews}</p>}</div>
+
+            </div>
 
         </div>
     );

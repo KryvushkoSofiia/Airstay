@@ -22,9 +22,24 @@ function CreateSpotForm() {
   const [image5, setImage5] = useState("");
   const [lat, setLat] = useState("");
   const [lng, setLng] = useState("");
+  const [error, setError] = useState(""); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (
+      !country ||
+      !address ||
+      !city ||
+      !state ||
+      !description ||
+      !title ||
+      !price ||
+      !previewImage
+    ) {
+      setError("All fields are required.");
+      return;
+    }
 
     const newSpot = {
       address,
@@ -98,6 +113,7 @@ function CreateSpotForm() {
               placeholder="Country"
               className="input-field"
             />
+            {(!country && error) && <p className="error">Country is required.</p>}
           </label>
           <label>
             Street Address
@@ -108,6 +124,7 @@ function CreateSpotForm() {
               placeholder="Address"
               className="input-field"
             />
+            {(!address && error) && <p className="error">Address is required.</p>}
           </label>
         </div>
 
@@ -121,6 +138,7 @@ function CreateSpotForm() {
               placeholder="City"
               className="input-field"
             />
+            {(!city && error) && <p className="error">City is required.</p>}
           </label>
           <label>
             State
@@ -131,6 +149,7 @@ function CreateSpotForm() {
               placeholder="STATE"
               className="input-field"
             />
+            {(!state && error) && <p className="error">State is required.</p>}
           </label>
           <label>
             Latitude
@@ -168,12 +187,13 @@ function CreateSpotForm() {
             rows="5"
             className="textarea"
           ></textarea>
+          {(!description && error) && <p className="error">Description is required.</p>}
         </div>
 
         <div className="form-group">
           <h2 className="subtitle">Create a Title for Your Spot</h2>
           <label>
-            Catch guests' attention with a spot title that highlights what
+            Catch guests attention with a spot title that highlights what
             makes your place special.
             <input
               type="text"
@@ -182,6 +202,7 @@ function CreateSpotForm() {
               placeholder="Name of your spot"
               className="input-field"
             />
+            {(!title && error) && <p className="error">Title is required.</p>}
           </label>
         </div>
 
@@ -201,6 +222,7 @@ function CreateSpotForm() {
                 placeholder="Price per night (USD)"
                 className="input-field"
               />
+              {(!price && error) && <p className="error">Price is required.</p>}
             </label>
           </div>
         </div>
@@ -216,6 +238,7 @@ function CreateSpotForm() {
               placeholder="Preview Image URL"
               className="input-field"
             />
+            {(!previewImage && error) && <p className="error">Preview Image is required.</p>}
           </label>
           <input
             type="url"
@@ -247,6 +270,8 @@ function CreateSpotForm() {
           />
         </div>
 
+        {error && <p className="error">{error}</p>}
+        
         <button type="submit" className="submit-button">
           Create Spot
         </button>

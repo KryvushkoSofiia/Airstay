@@ -1,6 +1,10 @@
-.spot-details-container {
+.spot-details_wrapper{
   margin: auto;
   max-width: 1350px;
+}
+
+.spot-details-container {
+  margin: auto;
   padding: 0 20px;
   display: flex;
   flex-wrap: wrap;
@@ -91,4 +95,40 @@
 
 .reserve-btn:hover {
   background-color: #0056b3;
+}
+
+.details-wrapper{
+  max-width: 60%;
+}
+
+.description{
+  max-width: 60%;
+  word-wrap: break-word;
+}
+
+
+.rating-reviews__block {
+  border-top: 1px solid black;
+  padding-top: 20px;
+  margin-top: 20px; 
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  font-size: 18px; 
+  color: #333;
+  text-align: center; 
+}
+
+.rating-reviews__block .star-rating {
+  font-size: 24px; 
+  margin-bottom: 8px; 
+  margin-right: 10px;
+}
+
+.rating-reviews__block p {
+  margin: 0; 
+}
+
+.dot{
+  margin: 0 5px; 
 }
