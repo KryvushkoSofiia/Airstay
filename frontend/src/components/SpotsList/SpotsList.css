@@ -4,10 +4,15 @@
 
 }
 
+.spot-container{
+    margin-top: 20px
+}
+
 .spot-container>* {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+   
 }
 
 .spot-details {
@@ -55,4 +60,13 @@
 
 .thumbnail:hover .tooltip {
     opacity: 1;
+}
+
+@media screen and (min-width: 1016px) {
+    .spot-container{
+        margin-top: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+        max-width: 19%;
+    }
 }

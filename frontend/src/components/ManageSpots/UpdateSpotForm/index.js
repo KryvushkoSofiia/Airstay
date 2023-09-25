@@ -10,13 +10,17 @@ function UpdateSpotForm() {
   const { id } = useParams();
   const singleSpot = useSelector((state) => state.spot.singleSpot);
 
-  const [country, setCountry] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [description, setDescription] = useState("");
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
+  const initialFormData = {
+    country: "",
+    address: "",
+    city: "",
+    state: "",
+    description: "",
+    title: "",
+    price: "",
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
   const [update, setUpdate] = useState(false);
   const [error, setError] = useState("");
 
@@ -29,28 +33,40 @@ function UpdateSpotForm() {
       console.log("no spot found");
     } else {
       setUpdate(true);
-      setCountry(singleSpot.country);
-      setAddress(singleSpot.address);
-      setCity(singleSpot.city);
-      setState(singleSpot.state);
-      setDescription(singleSpot.description);
-      setTitle(singleSpot.name);
-      setPrice(singleSpot.price);
+      setFormData({
+        country: singleSpot.country,
+        address: singleSpot.address,
+        city: singleSpot.city,
+        state: singleSpot.state,
+        description: singleSpot.description,
+        title: singleSpot.name,
+        price: singleSpot.price,
+      });
     }
   }, [singleSpot]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !country ||
-      !address ||
-      !city ||
-      !state ||
-      !description ||
-      !title ||
-      !price
-    ) {
+    const {
+      country,
+      address,
+      city,
+      state,
+      description,
+      title,
+      price,
+    } = formData;
+
+    if (!country || !address || !city || !state || !description || !title || !price) {
       setError("All fields are required.");
       return;
     }
@@ -90,23 +106,25 @@ function UpdateSpotForm() {
             Country
             <input
               type="text"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
               placeholder="Country"
               className="location-input"
             />
-            {(!country && error) && <p className="error">Country is required.</p>}
+            {(!formData.country && error) && <p className="error">Country is required.</p>}
           </label>
           <label className="location-label">
             Street Address
             <input
               type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
               placeholder="Address"
               className="location-input"
             />
-            {(!address && error) && <p className="error">Address is required.</p>}
+            {(!formData.address && error) && <p className="error">Address is required.</p>}
           </label>
         </div>
         <div className="location-inputs">
@@ -114,23 +132,25 @@ function UpdateSpotForm() {
             City
             <input
               type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
               placeholder="City"
               className="location-input"
             />
-            {(!city && error) && <p className="error">City is required.</p>}
+            {(!formData.city && error) && <p className="error">City is required.</p>}
           </label>
           <label className="location-label">
             State
             <input
               type="text"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
               placeholder="STATE"
               className="location-input"
             />
-            {(!state && error) && <p className="error">State is required.</p>}
+            {(!formData.state && error) && <p className="error">State is required.</p>}
           </label>
         </div>
         <div>
@@ -141,13 +161,14 @@ function UpdateSpotForm() {
             neighborhood
           </h4>
           <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
             placeholder="Please write at least 30 characters"
             rows="5"
             className="description-input"
           ></textarea>
-          {(!description && error) && <p className="error">Description is required.</p>}
+          {(!formData.description && error) && <p className="error">Description is required.</p>}
         </div>
         <div>
           <h2>Create a title for your spot</h2>
@@ -156,12 +177,13 @@ function UpdateSpotForm() {
             makes your place special.
             <input
               type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
               placeholder="Name of your spot"
               className="location-input"
             />
-            {(!title && error) && <p className="error">Title is required.</p>}
+            {(!formData.title && error) && <p className="error">Title is required.</p>}
           </label>
         </div>
         <div>
@@ -175,12 +197,13 @@ function UpdateSpotForm() {
               $
               <input
                 type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
                 placeholder="Price per night (USD)"
                 className="location-input"
               />
-              {(!price && error) && <p className="error">Price is required.</p>}
+              {(!formData.price && error) && <p className="error">Price is required.</p>}
             </label>
           </div>
         </div>

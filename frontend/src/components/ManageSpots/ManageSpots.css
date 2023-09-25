@@ -114,7 +114,7 @@
     background-color: #218838;
 }
 
-.manage-delete-button {
+/* .manage-delete-button {
     background-color: #dc3545;
     color: #fff;
     border: none;
@@ -125,4 +125,10 @@
 
 .manage-delete-button:hover {
     background-color: #c82333;
-}
+} */
+
+
+/* .modal-delete-btn{
+    background-color: none;
+    color: #000;
+} */

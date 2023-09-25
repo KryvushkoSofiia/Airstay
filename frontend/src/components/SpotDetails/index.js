@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+
 import { getSingleSpot } from '../../store/spot';
+
 import './SpotDetails.css';
 
 const SpotDetails = () => {
     const { spotId } = useParams();
     const dispatch = useDispatch();
+
     const singleSpot = useSelector((state) => state.spot.singleSpot);
+    const reviews = useSelector((state) => state.review.spot);
+
+    const reviewsArray = Object.values(reviews);
+
     console.log("single spot ", singleSpot);
+    console.log("typeof single spot:", typeof singleSpot);
+    console.log("reviews ", reviews);
+    console.log("typeof reviews:", typeof reviews);
+    console.log('single spot reviews array: ', reviewsArray)
+
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -18,7 +30,8 @@ const SpotDetails = () => {
                 console.error(error);
                 setIsLoading(false);
             });
-    }, [dispatch, spotId]);
+    }, [dispatch, spotId, reviewsArray.length]);
+
 
     const reserveSpot = () => {
         alert("Feature coming soon");
@@ -47,17 +60,17 @@ const SpotDetails = () => {
                     {singleSpot.SpotImages.length > 0 && (
                         <div className='images-wrapper'>
                             <div>
-                                <img src={singleSpot.SpotImages[0].url} alt="Large Image" className="large-image" />
+                                <img src={singleSpot.SpotImages[0].url} alt="Large" className="large-image" />
                             </div>
                             <div className='small-img-wrapper'>
                                 <div className="small-image-row">
                                     {singleSpot.SpotImages.slice(1, 3).map((image, index) => (
-                                        <img key={index} src={image.url} alt={`Image ${index + 1}`} className="small-image" />
+                                        <img key={index} src={image.url} alt={`${index + 1}`} className="small-image" />
                                     ))}
                                 </div>
                                 <div className="small-image-row">
                                     {singleSpot.SpotImages.slice(3).map((image, index) => (
-                                        <img key={index} src={image.url} alt={`Image ${index + 1}`} className="small-image" />
+                                        <img key={index} src={image.url} alt={`${index + 1}`} className="small-image" />
                                     ))}
                                 </div>
                             </div>
@@ -72,7 +85,7 @@ const SpotDetails = () => {
 
                 <div className="callout-box">
                     <div className='callout-box__info'>
-                        <p>{singleSpot.price}$ night</p>
+                        <p>${singleSpot.price} night</p>
                         <div className="star-rating">★ {singleSpot.avgRating > 0 ? singleSpot.avgRating.toFixed(1) : 'New'}</div>
                         {numReviews !== 0 && (
                             <div className="dot">•</div>
@@ -90,6 +103,7 @@ const SpotDetails = () => {
                 <div>{numReviews !== 0 && <p>Reviews: {numReviews}</p>}</div>
 
             </div>
+
 
         </div>
     );

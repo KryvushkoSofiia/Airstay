@@ -18,3 +18,13 @@ li>* {
     background-color: #fff;
     border: none;
 }
+
+
+.create-spot-btn{
+    margin-right: 20px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #000;
+    background-color: #fff;
+    border: none;
+}

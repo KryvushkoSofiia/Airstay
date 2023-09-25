@@ -1,4 +1,6 @@
 import { csrfFetch, restoreCSRF } from "./csrf";
+
+// Action Types
 const LOAD = 'spot/LOAD';
 const LOAD_ONE = 'spot/LOAD_ONE';
 const CREATE_SPOT = 'spot/CREATE_SPOT';
@@ -6,7 +8,7 @@ const UPLOAD_IMAGE = 'spot/UPLOAD_IMAGE';
 const UPDATE_SPOT = 'spot/UPDATE_SPOT';
 const DELETE_SPOT = 'spot/DELETE_SPOT';
 
-// Action Types
+// Action Creators
 const loadSpot = (spot) => ({
   type: LOAD,
   spot
@@ -43,6 +45,7 @@ export const getSpot = () => async (dispatch) => {
 
     if (response.ok) {
       const spot = await response.json();
+      console.log("SPOT", spot);
       dispatch(loadSpot(spot));
     } else {
       throw new Error('Failed to fetch spot');
@@ -56,6 +59,7 @@ export const getSingleSpot = (spotId) => async (dispatch) => {
 
     if (response.ok) {
       const spot = await response.json();
+      console.log("SPOT for single spot", spot);
       dispatch(loadOneSpot(spot));
     } else {
       throw new Error('Failed to fetch spot');
@@ -82,6 +86,7 @@ export const createSpot = (spotData) => async (dispatch) => {
     }
 };
 
+//thunk to upload image
 export const uploadImage = (imageData, spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
       method: 'POST',
@@ -100,6 +105,7 @@ export const uploadImage = (imageData, spotId) => async (dispatch) => {
     }
 };
 
+//Thunk to update a spot 
 export const updateSpot = (spotData) => async (dispatch) => {
     const { address, city, state, country, name, description, price, id } = spotData;
 
@@ -128,7 +134,7 @@ export const updateSpot = (spotData) => async (dispatch) => {
     }
 };
 
-// Thunk Action to delete a spot by spotId
+// Thunk to delete a spot by spotId
 export const deleteSpot = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: 'DELETE',
@@ -142,12 +148,12 @@ export const deleteSpot = (spotId) => async (dispatch) => {
     }
 };
 
-// Reducer
+//Initial state for reducer
 const initialState = {
   spot: {},
-  singleSpot: {SpotImages: []},
 };
 
+// Action Reducer
 const spotReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD:

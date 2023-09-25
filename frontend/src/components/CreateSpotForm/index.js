@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./CreateSpotForm.css";
@@ -7,25 +7,51 @@ import { createSpot, uploadImage } from "../../store/spot";
 function CreateSpotForm() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    country: "",
+    address: "",
+    city: "",
+    state: "",
+    description: "",
+    title: "",
+    price: "",
+    previewImage: "",
+    image2: "",
+    image3: "",
+    image4: "",
+    image5: "",
+    lat: "",
+    lng: "",
+  });
+  const [error, setError] = useState("");
 
-  const [country, setCountry] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [description, setDescription] = useState("");
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
-  const [image2, setImage2] = useState("");
-  const [image3, setImage3] = useState("");
-  const [image4, setImage4] = useState("");
-  const [image5, setImage5] = useState("");
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
-  const [error, setError] = useState(""); 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const {
+      country,
+      address,
+      city,
+      state,
+      description,
+      title,
+      price,
+      previewImage,
+      image2,
+      image3,
+      image4,
+      image5,
+      lat,
+      lng,
+    } = formData;
 
     if (
       !country ||
@@ -42,10 +68,10 @@ function CreateSpotForm() {
     }
 
     const newSpot = {
+      country,
       address,
       city,
       state,
-      country,
       lat,
       lng,
       name: title,
@@ -54,42 +80,18 @@ function CreateSpotForm() {
     };
     const returnSpot = await dispatch(createSpot(newSpot));
 
-    if (previewImage.length > 0) {
-      const createPreviewImage = {
-        url: previewImage,
-        preview: true,
-      };
-      dispatch(uploadImage(createPreviewImage, returnSpot));
-    }
+    const images = [previewImage, image2, image3, image4, image5];
 
-    if (image2.length > 0) {
-      const img = {
-        url: image2,
-        preview: false,
-      };
-      dispatch(uploadImage(img, returnSpot));
-    }
-    if (image3.length > 0) {
-      const img = {
-        url: image3,
-        preview: false,
-      };
-      dispatch(uploadImage(img, returnSpot));
-    }
-    if (image4.length > 0) {
-      const img = {
-        url: image4,
-        preview: false,
-      };
-      dispatch(uploadImage(img, returnSpot));
-    }
-    if (image5.length > 0) {
-      const img = {
-        url: image5,
-        preview: false,
-      };
-      dispatch(uploadImage(img, returnSpot));
-    }
+    images.forEach(async (img, index) => {
+      if (img.length > 0) {
+        const imgData = {
+          url: img,
+          preview: index === 0,
+        };
+        await dispatch(uploadImage(imgData, returnSpot));
+      }
+    });
+
     history.push(`/spots/${returnSpot}`);
   };
 
@@ -108,23 +110,25 @@ function CreateSpotForm() {
             Country
             <input
               type="text"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
               placeholder="Country"
               className="input-field"
             />
-            {(!country && error) && <p className="error">Country is required.</p>}
+            {(!formData.country && error) && <p className="error">Country is required.</p>}
           </label>
           <label>
             Street Address
             <input
               type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
               placeholder="Address"
               className="input-field"
             />
-            {(!address && error) && <p className="error">Address is required.</p>}
+            {(!formData.address && error) && <p className="error">Address is required.</p>}
           </label>
         </div>
 
@@ -133,30 +137,33 @@ function CreateSpotForm() {
             City
             <input
               type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
               placeholder="City"
               className="input-field"
             />
-            {(!city && error) && <p className="error">City is required.</p>}
+            {(!formData.city && error) && <p className="error">City is required.</p>}
           </label>
           <label>
             State
             <input
               type="text"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
               placeholder="STATE"
               className="input-field"
             />
-            {(!state && error) && <p className="error">State is required.</p>}
+            {(!formData.state && error) && <p className="error">State is required.</p>}
           </label>
           <label>
             Latitude
             <input
               type="text"
-              value={lat}
-              onChange={(e) => setLat(e.target.value)}
+              name="lat"
+              value={formData.lat}
+              onChange={handleChange}
               placeholder="Latitude"
               className="input-field"
             />
@@ -165,8 +172,9 @@ function CreateSpotForm() {
             Longitude
             <input
               type="text"
-              value={lng}
-              onChange={(e) => setLng(e.target.value)}
+              name="lng"
+              value={formData.lng}
+              onChange={handleChange}
               placeholder="Longitude"
               className="input-field"
             />
@@ -181,13 +189,14 @@ function CreateSpotForm() {
             neighborhood
           </h4>
           <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
             placeholder="Please write at least 30 characters"
             rows="5"
             className="textarea"
           ></textarea>
-          {(!description && error) && <p className="error">Description is required.</p>}
+          {(!formData.description && error) && <p className="error">Description is required.</p>}
         </div>
 
         <div className="form-group">
@@ -197,12 +206,13 @@ function CreateSpotForm() {
             makes your place special.
             <input
               type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
               placeholder="Name of your spot"
               className="input-field"
             />
-            {(!title && error) && <p className="error">Title is required.</p>}
+            {(!formData.title && error) && <p className="error">Title is required.</p>}
           </label>
         </div>
 
@@ -217,12 +227,13 @@ function CreateSpotForm() {
               $
               <input
                 type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
                 placeholder="Price per night (USD)"
                 className="input-field"
               />
-              {(!price && error) && <p className="error">Price is required.</p>}
+              {(!formData.price && error) && <p className="error">Price is required.</p>}
             </label>
           </div>
         </div>
@@ -233,38 +244,43 @@ function CreateSpotForm() {
             Submit a link to at least one photo to publish your spot.
             <input
               type="url"
-              value={previewImage}
-              onChange={(e) => setPreviewImage(e.target.value)}
+              name="previewImage"
+              value={formData.previewImage}
+              onChange={handleChange}
               placeholder="Preview Image URL"
               className="input-field"
             />
-            {(!previewImage && error) && <p className="error">Preview Image is required.</p>}
+            {(!formData.previewImage && error) && <p className="error">Preview Image is required.</p>}
           </label>
           <input
             type="url"
-            value={image2}
-            onChange={(e) => setImage2(e.target.value)}
+            name="image2"
+            value={formData.image2}
+            onChange={handleChange}
             placeholder="Image URL"
             className="input-field"
           />
           <input
             type="url"
-            value={image3}
-            onChange={(e) => setImage3(e.target.value)}
+            name="image3"
+            value={formData.image3}
+            onChange={handleChange}
             placeholder="Image URL"
             className="input-field"
           />
           <input
             type="url"
-            value={image4}
-            onChange={(e) => setImage4(e.target.value)}
+            name="image4"
+            value={formData.image4}
+            onChange={handleChange}
             placeholder="Image URL"
             className="input-field"
           />
           <input
             type="url"
-            value={image5}
-            onChange={(e) => setImage5(e.target.value)}
+            name="image5"
+            value={formData.image5}
+            onChange={handleChange}
             placeholder="Image URL"
             className="input-field"
           />

@@ -64,15 +64,15 @@ function ProfileButton({ user }) {
       <div className={ulClassName} ref={ulRef}>
         {showMenu && (
           <ul className="profile-dropdown-list">
-            <li className="profile-dropdown-item username">Hello, {user.username}</li>
-            <li className="profile-dropdown-item" onClick={(e) => e.stopPropagation()}>
+            <li className="profile-dropdown-item username" onClick={(e) => e.stopPropagation()}>Hello, {user.username}</li>
+            {/* <li className="profile-dropdown-item" onClick={(e) => e.stopPropagation()}>
               {user.firstName} {user.lastName}
-            </li>
+            </li> */}
             <li className="profile-dropdown-item" onClick={(e) => e.stopPropagation()}>
               {user.email}
             </li>
             <li className="profile-dropdown-item" onClick={(e) => e.stopPropagation()}>
-              <NavLink to={`/user-spots/${user.id}`}>
+              <NavLink className="profile-dropdown-managespot" to={`/user-spots/${user.id}`}>
                 Manage spots
               </NavLink>
             </li>

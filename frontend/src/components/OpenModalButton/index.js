@@ -1,5 +1,6 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
+import "./OpenModalButton.css";
 
 function OpenModalButton({
   modalComponent,
@@ -15,7 +16,7 @@ function OpenModalButton({
     setModalContent(modalComponent);
   };
 
-  return <button onClick={onClick}>{buttonText}</button>;
+  return <button onClick={onClick} className="manage-delete-btn">{buttonText}</button>;
 }
 
 export default OpenModalButton;

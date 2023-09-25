@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSpotReviews } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
+
+import { getSpotReviews } from "../../store/reviews";
 import { DeleteReviewModal } from "../ReviewModal/DeleteReviewModal";
 import { ReviewModal } from "../ReviewModal";
-import { getSingleSpot } from "../../store/spot";
+
 import "./SpotReviews.css";
 
 const SpotReviews = () => {
@@ -15,6 +16,9 @@ const SpotReviews = () => {
   const reviews = useSelector((state) => state.review.spot);
   const spotReviews = Object.values(reviews).reverse();
   const singleSpot = useSelector((state) => state.spot.singleSpot);
+
+  console.log("Reviews", reviews);
+  console.log("Typeof Reviews:", typeof reviews);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -26,8 +30,10 @@ const SpotReviews = () => {
 
   useEffect(() => {
     dispatch(getSpotReviews(spotId));
-    dispatch(getSingleSpot(spotId));
+    //dispatch(getSingleSpot(spotId)); 
   }, [dispatch, spotId]);
+
+ 
 
   if (!reviews) return null;
 

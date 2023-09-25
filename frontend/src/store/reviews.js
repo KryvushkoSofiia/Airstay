@@ -1,8 +1,10 @@
 import { csrfFetch } from "./csrf";
 
+//Action types
 const GET_ALL_REVIEWS = 'reviews/GET_ALL_REVIEWS';
 const DELETE_REVIEW = 'reviews/DELETE_REVIEW'
 
+//Action creators
 const getAllReviews = (review, spotId) => {
     return { type: GET_ALL_REVIEWS, review, spotId } };
 
@@ -10,6 +12,7 @@ const deleteAReview = reviewId => {
     return { type: DELETE_REVIEW, reviewId } }
 
 
+// Thunk to create a review 
 export const createReview = (review, spotId) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
@@ -26,7 +29,7 @@ export const createReview = (review, spotId) => async dispatch => {
     }
 }
 
-
+//Thunk to get all reviews for a spot based on spot id
 export const getSpotReviews = (spotId) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
     if (response.ok) {
@@ -39,7 +42,7 @@ export const getSpotReviews = (spotId) => async dispatch => {
     }
 }
 
-
+//Thunk to delete a review based on review id
 export const deleteReview = (reviewId) => async dispatch => {
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE'
@@ -53,8 +56,10 @@ export const deleteReview = (reviewId) => async dispatch => {
     }
 }
 
+//Initial state for reducer
 const initialState = { spot: {}, user: {} }
 
+//Action Reducer
 const reviewReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {

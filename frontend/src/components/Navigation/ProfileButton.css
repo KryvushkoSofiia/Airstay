@@ -55,3 +55,14 @@
 .logout-btn:hover {
   background-color: #cc0000;
 }
+
+.profile-dropdown-managespot{
+  text-decoration: none;
+  color: #000;
+  background-color: none;
+}
+
+.profile-dropdown-managespot:hover{
+  color: #cc0000;
+  background-color: none;
+}
