@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          len: [10, 30],
+          len: [10, 255],
           isEmail: true,
         },
       },
