@@ -83,9 +83,9 @@ function LoginFormModal() {
           <p className="login-form-error">Password must be at least 6 characters</p>
         )}
         <button
-          className="login-form-button"
+          className="login-logout-form-button"
           type="submit"
-          disabled={!isUsernameValid || !isPasswordValid}
+          disabled={(!isUsernameValid || !isPasswordValid) || (credential.length === 0 && password.length ===0)}
         >
           Log In
         </button>

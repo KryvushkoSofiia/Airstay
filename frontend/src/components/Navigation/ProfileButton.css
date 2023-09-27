@@ -31,6 +31,9 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .profile-dropdown-item {
@@ -60,6 +63,7 @@
   text-decoration: none;
   color: #000;
   background-color: none;
+ 
 }
 
 .profile-dropdown-managespot:hover{

@@ -1,17 +1,18 @@
 .spots-main {
     margin: 20px auto;
-    max-width: 1024px;
+    max-width: 1440px;
 
 }
 
 .spot-container{
-    margin-top: 20px
+    margin-top: 20px;
 }
 
 .spot-container>* {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+    
    
 }
 
@@ -26,14 +27,18 @@
 .spots-list {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
+}
+
+.spots-list > *{
+    margin: 10px;
 }
 
 
 .thumbnail {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
@@ -62,11 +67,43 @@
     opacity: 1;
 }
 
-@media screen and (min-width: 1016px) {
+@media screen and (min-width: 1000px) {
+
+    .thumbnail {
+        width: 200px;
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        position: relative;
+    
+    }
+    
     .spot-container{
         margin-top: 20px;
         margin-left: 10px;
         margin-right: 10px;
-        max-width: 19%;
+        max-width: 20%;
+    }
+}
+
+
+@media screen and (min-width: 1250px) {
+
+    .thumbnail {
+        width: 300px;
+        height: 300px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        position: relative;
+    
+    }
+    
+    .spot-container{
+        margin-top: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+        max-width: 20%;
     }
 }

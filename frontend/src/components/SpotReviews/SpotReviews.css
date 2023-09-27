@@ -45,6 +45,7 @@
     padding: 10px;
     margin: 10px 0;
     background-color: #f4f4f4;
+    max-width: 1350px;
   }
   
   .review-author {
@@ -62,6 +63,8 @@
   .review-body {
     margin-top: 10px;
     font-size: 16px;
+    /* max-width: 200px; */
+    word-break: break-all;
   }
   
   .delete-review-button {
@@ -96,3 +99,7 @@
     background-color: #0056b3;
   }
   
+
+  .no-reviews-user{
+    font-size: 20px;
+  }

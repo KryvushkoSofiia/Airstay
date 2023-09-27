@@ -151,6 +151,9 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 //Initial state for reducer
 const initialState = {
   spot: {},
+  singleSpot:{
+    SpotImages: [],
+  }
 };
 
 // Action Reducer
@@ -189,7 +192,7 @@ const spotReducer = (state = initialState, action) => {
       return {
         ...state,
         spot: restSpots,
-      };
+      };  
     default:
       return state;
   }

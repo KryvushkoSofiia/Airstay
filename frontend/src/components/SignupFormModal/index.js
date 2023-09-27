@@ -13,12 +13,34 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
   const { closeModal } = useModal();
+
+  const isUsernameValid = username.length >= 4;
+  const isPasswordValid = password.length >= 6;
+
+  const isAnyFieldEmpty =
+    !email ||
+    !isUsernameValid ||
+    !firstName ||
+    !lastName ||
+    !isPasswordValid ||
+    !confirmPassword;
+
+  const handleFieldBlur = (field) => {
+    setTouched((prevTouched) => ({
+      ...prevTouched,
+      [field]: true,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors({});
+      if (!isUsernameValid) {
+        return setErrors({ username: "Username must be at least 4 characters long" });
+      }
       return dispatch(
         sessionActions.signup({
           email,
@@ -37,7 +59,7 @@ function SignupFormModal() {
         });
     }
     return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the password field"
+      confirmPassword: "Confirm Password field must be the same as the password field",
     });
   };
 
@@ -45,69 +67,87 @@ function SignupFormModal() {
     <div className="signup-form-container">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label >
+        <label>
           Email
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onBlur={() => handleFieldBlur("email")}
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {touched.email && errors.email && <p>{errors.email}</p>}
         <label>
           Username
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onBlur={() => handleFieldBlur("username")} 
             required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {touched.username && errors.username && <p>{errors.username}</p>}
+        {!isUsernameValid && touched.username && (
+          <p>Username must be at least 4 characters long</p>
+        )}
         <label>
           First Name
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            onBlur={() => handleFieldBlur("firstName")} 
             required
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {touched.firstName && errors.firstName && <p>{errors.firstName}</p>}
         <label>
           Last Name
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            onBlur={() => handleFieldBlur("lastName")} 
             required
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {touched.lastName && errors.lastName && <p>{errors.lastName}</p>}
         <label>
           Password
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onBlur={() => handleFieldBlur("password")} 
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {touched.password && errors.password && <p>{errors.password}</p>}
+        {!isPasswordValid && touched.password && (
+          <p>Password must be at least 6 characters long</p>
+        )}
         <label>
           Confirm Password
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            onBlur={() => handleFieldBlur("confirmPassword")}
             required
           />
         </label>
-        {errors.confirmPassword && (
+        {touched.confirmPassword && errors.confirmPassword && (
           <p>{errors.confirmPassword}</p>
         )}
-        <button type="submit">Sign Up</button>
+        <button
+          type="submit"
+          className="login-logout-form-button"
+          disabled={isAnyFieldEmpty}
+        >
+          Sign Up
+        </button>
       </form>
     </div>
   );

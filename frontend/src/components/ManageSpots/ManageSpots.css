@@ -71,7 +71,7 @@
 }
 
 .manage-spot-details {
-    padding: 20px;
+    padding: 0 20px;
 }
 
 .manage-spot-location {
@@ -81,13 +81,16 @@
 
 .manage-spot-rating {
     font-size: 14px;
-    color: #888;
+    color: #000;
+    /* margin-right: 30px; */
+    font-weight: 800;
 }
 
 .manage-spot-price {
+  
     font-size: 18px;
     font-weight: bold;
-    padding: 0 20px 20px;
+    padding: 0 0 20px;
 }
 
 .manage-spot-actions {
@@ -132,3 +135,11 @@
     background-color: none;
     color: #000;
 } */
+
+.manage-spot-details-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 10px;
+}

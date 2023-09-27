@@ -7,6 +7,7 @@
   margin: auto;
   padding: 0 20px;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
@@ -28,8 +29,9 @@
 
 .large-image {
   cursor: pointer;
-  max-width: 100%;
+  width: 100%;
   height: auto;
+  
 }
 
 .small-image {
@@ -53,7 +55,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+
 }
 
 .callout-box__info {
@@ -102,21 +106,21 @@
 }
 
 .description{
-  max-width: 60%;
   word-wrap: break-word;
 }
 
 
 .rating-reviews__block {
-  border-top: 1px solid black;
-  padding-top: 20px;
-  margin-top: 20px; 
+  /* border-top: 1px solid black; */
+  padding-top: 10px;
+  /* margin-top: 20px;  */
   display: flex;
   flex-direction: row;
   align-items: baseline;
   font-size: 18px; 
   color: #333;
   text-align: center; 
+
 }
 
 .rating-reviews__block .star-rating {
@@ -131,4 +135,43 @@
 
 .dot{
   margin: 0 5px; 
+}
+
+.star-rate-review-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.large-single-image-wrapper{
+  align-self: center;
+  display: flex;
+
+}
+
+.images{
+  align-self: center;
+}
+
+.large-single-image {
+  display: block;
+  margin: auto;
+  max-width: 80%;
+  height: auto;
+  align-self: center;
+}
+
+.hosted-by-name{
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.user-info-box-wrapper{
+  width: 100%;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 30px;
+  border-bottom: 1px solid black;
 }

@@ -51,12 +51,16 @@ function ManageSpots() {
                                 <NavLink to={`/spots/${spot.id}`} className="manage-spot-link">
                                     <img src={spot.previewImage} alt={`Spot ${spot.id}`} className="manage-spot-image" />
                                 </NavLink>
-                                <div className="manage-spot-details">
-                                    <p className="manage-spot-location">{`${spot.city}, ${spot.state}`}</p>
-                                    <p className="manage-spot-rating">{spot.avgRating || "New"}</p>
-                                </div>
-                                <div className="manage-spot-price">
-                                    <p>{`$${spot.price} night`}</p>
+                                <div className="manage-spot-details-wrapper">
+                                    <div className="manage-spot-details">
+                                        <p className="manage-spot-location">{`${spot.city}, ${spot.state}`}</p>
+                                        <div className="manage-spot-price">
+                                            <p>{`$${spot.price} night`}</p>
+                                        </div>
+                                    </div>
+
+                                    <p className="manage-spot-rating">★ {spot.avgRating || "New"}</p>
+
                                 </div>
                                 <div className="manage-spot-actions">
                                     <NavLink to={`/spots/${spot.id}/update`} className="manage-update-link">

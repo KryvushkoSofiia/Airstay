@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { updateSpot, getSpot } from "../../../store/spot";
+import { updateSpot, getSingleSpot } from "../../../store/spot";
 import "./UpdateSpotForm.css";
 
 function UpdateSpotForm() {
@@ -25,8 +25,8 @@ function UpdateSpotForm() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    dispatch(getSpot());
-  }, [dispatch]);
+    dispatch(getSingleSpot(id));
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (!singleSpot) {
@@ -34,13 +34,13 @@ function UpdateSpotForm() {
     } else {
       setUpdate(true);
       setFormData({
-        country: singleSpot.country,
-        address: singleSpot.address,
-        city: singleSpot.city,
-        state: singleSpot.state,
-        description: singleSpot.description,
-        title: singleSpot.name,
-        price: singleSpot.price,
+        country: singleSpot.country || "",
+        address: singleSpot.address || "",
+        city: singleSpot.city || "",
+        state: singleSpot.state || "",
+        description: singleSpot.description || "", 
+        title: singleSpot.name || "",
+        price: singleSpot.price || "",
       });
     }
   }, [singleSpot]);
@@ -66,8 +66,17 @@ function UpdateSpotForm() {
       price,
     } = formData;
 
-    if (!country || !address || !city || !state || !description || !title || !price) {
-      setError("All fields are required.");
+    if (
+      !country ||
+      !address ||
+      !city ||
+      !state ||
+      !title ||
+      !price ||
+      !description ||
+      description.length < 30
+    ) {
+      setError("All fields are required, and description must be at least 30 characters.");
       return;
     }
 
@@ -127,7 +136,7 @@ function UpdateSpotForm() {
             {(!formData.address && error) && <p className="error">Address is required.</p>}
           </label>
         </div>
-        <div className="location-inputs">
+        <div className="location-inputs city-state">
           <label className="location-label">
             City
             <input
@@ -140,6 +149,7 @@ function UpdateSpotForm() {
             />
             {(!formData.city && error) && <p className="error">City is required.</p>}
           </label>
+          <div className="comma">,</div>
           <label className="location-label">
             State
             <input
@@ -147,7 +157,7 @@ function UpdateSpotForm() {
               name="state"
               value={formData.state}
               onChange={handleChange}
-              placeholder="STATE"
+              placeholder="State"
               className="location-input"
             />
             {(!formData.state && error) && <p className="error">State is required.</p>}
@@ -169,11 +179,14 @@ function UpdateSpotForm() {
             className="description-input"
           ></textarea>
           {(!formData.description && error) && <p className="error">Description is required.</p>}
+          {formData.description.length < 30 && (
+            <p className="error">Description needs to be at least 30 characters.</p>
+          )}
         </div>
         <div>
           <h2>Create a title for your spot</h2>
           <label className="location-label">
-            Catch guests attention with a spot title that highlights what
+            Catch guests' attention with a spot title that highlights what
             makes your place special.
             <input
               type="text"
