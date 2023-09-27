@@ -351,7 +351,7 @@ function CreateSpotForm() {
             placeholder="Image URL"
             className="input-field"
           />
-          {errors.image2 && <p className="error">{errors.image2}</p>}
+          {/* {errors.image2 && <p className="error">{errors.image2}</p>} */}
           {!isImage(formData.image2) &&
             formData.image2.trim() !== "" && (
               <p className="error">Image URL must end in .png, .jpg, or .jpeg</p>
@@ -364,7 +364,7 @@ function CreateSpotForm() {
             placeholder="Image URL"
             className="input-field"
           />
-          {errors.image3 && <p className="error">{errors.image3}</p>}
+          {/* {errors.image3 && <p className="error">{errors.image3}</p>} */}
           {!isImage(formData.image3) &&
             formData.image3.trim() !== "" && (
               <p className="error">Image URL must end in .png, .jpg, or .jpeg</p>
@@ -377,7 +377,7 @@ function CreateSpotForm() {
             placeholder="Image URL"
             className="input-field"
           />
-          {errors.image4 && <p className="error">{errors.image4}</p>}
+          {/* {errors.image4 && <p className="error">{errors.image4}</p>} */}
           {!isImage(formData.image4) &&
             formData.image4.trim() !== "" && (
               <p className="error">Image URL must end in .png, .jpg, or .jpeg</p>
@@ -390,7 +390,7 @@ function CreateSpotForm() {
             placeholder="Image URL"
             className="input-field"
           />
-          {errors.image5 && <p className="error">{errors.image5}</p>}
+          {/* {errors.image5 && <p className="error">{errors.image5}</p>} */}
           {!isImage(formData.image5) &&
             formData.image5.trim() !== "" && (
               <p className="error">Image URL must end in .png, .jpg, or .jpeg</p>

@@ -69,11 +69,16 @@ const SpotDetails = () => {
                             ) : (
                                 <>
                                     <div>
-                                        <img
-                                            src={singleSpot.SpotImages[0].url}
-                                            alt="Large"
-                                            className="large-image"
-                                        />
+                                        {singleSpot.SpotImages.map((image, index) => (
+                                            image.preview && (
+                                                <img
+                                                    key={index}
+                                                    src={image.url}
+                                                    alt="Large"
+                                                    className="large-image"
+                                                />
+                                            )
+                                        ))}
                                     </div>
                                     <div className="small-img-wrapper">
                                         <div className="small-image-row">
@@ -117,7 +122,7 @@ const SpotDetails = () => {
                                 {numReviews !== 0 && (
                                     <div className="dot">•</div>
                                 )}
-                                <div>{numReviews !== 0 && (numReviews > 1 ? <p>{numReviews} Reviews: </p> : <p>{numReviews} review </p>)}</div>
+                                <div>{numReviews !== 0 && (numReviews > 1 ? <p>{numReviews} reviews </p> : <p>{numReviews} review </p>)}</div>
                             </div>
                         </div>
                         <button className="reserve-btn" onClick={reserveSpot}>Reserve</button>

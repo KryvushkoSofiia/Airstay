@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 
 import * as reviewActions from '../../store/reviews';
-import './ReviewModal.css'; 
+import './ReviewModal.css';
 
 export const ReviewModal = ({ spot }) => {
   const dispatch = useDispatch();
@@ -15,10 +15,10 @@ export const ReviewModal = ({ spot }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors({});
-    if (starRating < 1) setErrors({ stars: "Please add star rating." });
-    if (reviewText.length < 10)
-      setErrors({ review: "Review must be at least 10 characters long" });
+      // setErrors({});
+      // if (starRating < 1) setErrors({ stars: "Please add star rating." });
+      // if (reviewText.length < 10)
+      //   setErrors({ review: "Review must be at least 10 characters long" });
 
     return dispatch(
       reviewActions.createReview({
@@ -34,12 +34,21 @@ export const ReviewModal = ({ spot }) => {
   return (
     <div className="review-modal">
       <h2 className="review-title">How was your stay?</h2>
-      <div className="review-errors-text">
+      {/* <div className="review-errors-text">
         {errors.stars && <span className="error">{errors.stars}</span>}
         {errors.review && <span className="error">{errors.review}</span>}
         {errors.error && <span className="error">{errors.error}</span>}
-      </div>
+      </div> */}
       <form onSubmit={handleSubmit}>
+        {(!starRating || reviewText.length < 10) && (
+          <div>
+            <div className="error">Please fill out all required fields.</div>
+            {/* <div className="error">Review must be at least 10 characters long</div> */}
+          </div>
+        )}
+        {(reviewText.length < 10) && (
+            <div className="error">Review must be at least 10 characters long</div>
+        )}
         <textarea
           className="review-input"
           type="textarea"
@@ -52,11 +61,9 @@ export const ReviewModal = ({ spot }) => {
             <div
               key={rating}
               onClick={() => setStarRating(rating)}
-              className={`fa-${
-                starRating >= rating ? "solid" : "regular"
-              } fa-star ${
-                tempRating >= rating ? "temp-solid" : "temp-regular"
-              }`}
+              className={`fa-${starRating >= rating ? "solid" : "regular"
+                } fa-star ${tempRating >= rating ? "temp-solid" : "temp-regular"
+                }`}
               onMouseEnter={() => setTempRating(rating)}
               onMouseLeave={() => setTempRating(starRating)}
             ></div>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, NavLink } from "react-router-dom";
+
 import { getSpot } from "../../store/spot";
 import OpenModalButton from "../OpenModalButton";
 import DeleteModal from "./DeleteSpotModal";
+
 import "./ManageSpots.css";
 
 function ManageSpots() {

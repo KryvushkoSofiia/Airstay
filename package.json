@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "express-validator": "^7.0.1"
+    "express-validator": "^7.0.1",
+    "faker": "^6.6.6"
   },
   "name": "airstay",
   "description": "<!--!!START SILENT -->\r # Airstay\r <!--!!END -->\r <!--!!ADD -->\r <!-- # `<name of application here>` -->\r <!--!!END_ADD -->",

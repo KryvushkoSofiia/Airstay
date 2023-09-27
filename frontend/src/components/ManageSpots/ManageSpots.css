@@ -43,7 +43,8 @@
 
 .manage-spot-card {
     background-color: #fff;
-    min-width: 200px;
+    min-width: 300px;
+    width: 400px;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -87,7 +88,6 @@
 }
 
 .manage-spot-price {
-  
     font-size: 18px;
     font-weight: bold;
     padding: 0 0 20px;

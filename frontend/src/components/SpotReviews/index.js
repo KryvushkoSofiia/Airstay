@@ -13,7 +13,7 @@ const SpotReviews = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
-  const userId = sessionUser ? sessionUser.id : null; // Check if sessionUser is null
+  const userId = sessionUser ? sessionUser.id : null;
   console.log("sessionUser", sessionUser); 
   console.log("USERID", userId);
   const reviews = useSelector((state) => state.review.spot);
